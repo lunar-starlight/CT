@@ -1,0 +1,266 @@
+% LTeX: enabled=false
+% Kodiranje in podpora slovenščini
+\usepackage[T1]{fontenc}        % kodiranje znakov v .pdf
+\usepackage[english]{babel}
+
+\usepackage{fontspec}
+\usepackage{lualatex-math}
+\usepackage{unicode-math}
+
+% \setmainfont{TeX Gyre Pagella}
+% \setmathfont{TeX Gyre Pagella Math}
+\setmathfont{Latin Modern Math}
+\setmathfont{Asana Math}[range={scr}]
+\setmathfont{STIX Two Math-Regular}[range={bb}]
+% \setmathfont{TeX Gyre Pagella Math}[range={8730}]
+% \setmathfont{Asana Math}[range={"007B,"007D}]  % {}
+\setmathfont{Asana Math}[range={8709, \setminus}]  % U+2205, emptyset
+
+% Ta paket potrebujemo, ker amsart spreminja male črke v velike v naslovu,
+% in tega ne zna pravilno delati s šumniki. Paket textcase ta problem odpravi.
+% Glej: https://tex.stackexchange.com/questions/211305/problem-with-greek-title
+\usepackage{textcase}
+
+% Paketi za matematiko
+
+\undef\eth
+\undef\digamma
+\undef\backepsilon
+\usepackage{amsmath}  % razna okolja za poravnane enačbe ipd.
+\usepackage{amsthm}   % definicije okolij za izreke, definicije, ...
+% \usepackage{xypic}    % paket za diagrame
+
+% \usepackage{mathtools}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{enumerate}
+\usepackage{tikz}
+\usetikzlibrary{babel}
+% \usepackage[plain]{algorithm}
+% \usepackage{algpseudocode}
+% \usepackage{listings}
+\usepackage{minted}
+\usepackage{hyperref}
+
+\usetikzlibrary{cd,positioning,calc}
+
+% quiver.sty
+% A TikZ style for curved arrows of a fixed height, due to AndréC.
+\tikzset{curve/.style={settings={#1},to path={(\tikztostart)
+    .. controls ($(\tikztostart)!\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
+    and ($(\tikztostart)!1-\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
+    .. (\tikztotarget)\tikztonodes}},
+    settings/.code={\tikzset{quiver/.cd,#1}
+        \def\pv##1{\pgfkeysvalueof{/tikz/quiver/##1}}},
+    quiver/.cd,pos/.initial=0.35,height/.initial=0}
+
+% TikZ arrowhead/tail styles.
+\tikzset{tail reversed/.code={\pgfsetarrowsstart{tikzcd to}}}
+\tikzset{2tail/.code={\pgfsetarrowsstart{Implies[reversed]}}}
+\tikzset{2tail reversed/.code={\pgfsetarrowsstart{Implies}}}
+% TikZ arrow styles.
+\tikzset{no body/.style={/tikz/dash pattern=on 0 off 1mm}}
+
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-5mm
+\evensidemargin=0cm
+\oddsidemargin=0cm
+\textwidth=17cm
+\textheight=24cm
+\headsep=6mm
+\headheight=12.5pt
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass:\ \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\usepackage{xstring}
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{solCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Naloga \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \IfInteger{#1}
+    {
+        \ifnum#1>0
+            \setcounter{homeworkProblemCounter}{#1}
+        \fi
+        \section{Problem \arabic{homeworkProblemCounter}}
+    }{
+        \section{Problem \arabic{homeworkProblemCounter}: #1}
+    }
+    \setcounter{partCounter}{1}
+    \setcounter{solCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Deadline:\ \hmwkDueDate}\\
+    % \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+% \renewcommand{\part{}}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+\renewcommand{\part}{
+    \vspace{10pt}
+    \textbf{(\alph{partCounter})}
+    \stepcounter{partCounter}
+}
+
+% Alias for the Solution section header
+\newcommand{\solution}[1][*]{
+    \vspace{10pt}
+    \ifx#1*
+        \textbf{Solution (\alph{solCounter})}
+        \stepcounter{solCounter}
+    \else
+        \textbf{Solution}
+    \fi
+}
+
+\newcommand{\example}[1][*]{
+    \vspace{10pt}
+    \ifx#1*
+        \textbf{Example (\alph{solCounter})}
+        \stepcounter{solCounter}
+    \else
+        \textbf{Example}
+    \fi
+}
+
+\AtBeginDocument{
+    \maketitle
+    \pagebreak
+}
+
+\makeatletter
+\def\mathcenterto#1#2{\mathclap{\phantom{#1}\mathclap{#2}}\phantom{#1}}
+\let\old@widetilde\widetilde
+\def\widetildeto#1#2{\mathcenterto{#2}{\old@widetilde{\mathcenterto{#1}{#2}}}}
+\makeatother
+
+\usepackage{scalerel}
+\usepackage{stackengine,wasysym}
+
+% \newcommand{\vphi}{\phi}
+\renewcommand{\phi}{\varphi}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\hat}{\widehat}
+\renewcommand{\tilde}{\widetilde}
+\renewcommand{\bar}{\overline}
+\newcommand{\subs}{\subseteq}
+\newcommand{\nin}{\not\in}
+
+\newcommand{\p}[1]{\left( {#1} \right)}
+\renewcommand{\b}[1]{\left[ {#1} \right]}
+\newcommand{\set}[2]{\left\{ #1 \mid #2 \right\}}
+\newcommand{\newfrac}[2]{{}^{#1}\!/_{\!#2}}
+\newcommand{\quot}[2]{\newfrac{#1}{#2}}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\coim}{coim}
+\DeclareMathOperator{\id}{1}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\mb}[1]{\mathbold{#1}}
+\newcommand{\mf}[1]{\mathfrak{#1}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+
+\newcommand{\for}[2]{\forall#1.\;#2}
+\newcommand{\exist}[2]{\exists\;#1\smallni:\;#2}
+\newcommand{\existi}[2]{\exists!\;#1\smallni:\;#2}
+
+\renewcommand{\check}{ \(\checkmark\)}
+
+\AtBeginDocument{
+    \newcat{C}{\mc{C}}
+    \newcat{cSet}{\mathbf{Set}}
+}
+
+\newcommand{\newcat}[2]{%
+    \expandafter\DeclareRobustCommand\csname#1\endcsname{\csname@ifnextchar\endcsname\bgroup{\csname@@#1\endcsname}{\csname@#1\endcsname}}
+    \expandafter\newcommand\csname@#1\endcsname{#2}
+    \expandafter\newcommand\csname@@#1\endcsname[1]{#2{\p{##1}}}
+}
+
+\makeatletter
+\newcommand{\oset}[3][0ex]{%
+    \mathrel{\mathop{#3}\limits^{
+            \vbox to#1{\kern-2\ex@
+                \hbox{$\scriptstyle#2$}\vss}}}}
+\makeatother
+
+\newcommand{\plbk}[8]{
+    \begin{tikzcd}[ampersand replacement=\&]
+        #1 \& #2\\
+        #3 \& #4
+        \arrow[from=1-1, to=1-2, "#5"]
+        \arrow[from=1-1, to=2-1, "#6"]
+        \arrow[from=1-2, to=2-2, "#7"]
+        \arrow[from=2-1, to=2-2, "#8"]
+        \arrow[from=1-1, to=2-2, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+    \end{tikzcd}
+}
+\newcommand{\psht}[8]{
+    \begin{tikzcd}[ampersand replacement=\&]
+        {#1} \& {#2}\\
+        {#3} \& {#4}
+        \arrow[from=1-1, to=1-2, "#5"]
+        \arrow[from=1-1, to=2-1, "#6"]
+        \arrow[from=1-2, to=2-2, "#7"]
+        \arrow[from=2-1, to=2-2, "#8"]
+        \arrow[from=2-2, to=1-1, "\scalebox{2}{\(\ulcorner\)}"{anchor=center,pos=0},phantom]
+    \end{tikzcd}
+}

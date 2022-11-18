@@ -1,0 +1,1 @@
+{"rule":"OF_ANY_OF","sentence":"^\\QKeep the following diagram in mind (note that we do not assert the commutativity or existence of any of the maps indicated by convention): \\E(?:Dummy|Ina|Jimmy-)[0-9]+$"}

@@ -1,0 +1,499 @@
+% LTeX: language=en-GB
+\documentclass[a4paper]{article}
+
+\input{../homework.tex}
+
+\newcommand{\hmwkTitle}{First Homework}
+\newcommand{\hmwkDueDate}{18.~11.~2022}
+\newcommand{\hmwkClass}{Category Theory}
+\newcommand{\hmwkClassTime}{}
+\newcommand{\hmwkClassInstructor}{}
+\newcommand{\hmwkAuthorName}{\textbf{Luna Strah},~27222025}
+
+\def\tX{\tilde{X}}
+\def\tY{\tilde{Y\,}}
+\def\tZ{\tilde{Z}}
+\def\tmf{t_{m,f}}
+
+\begin{document}
+\newcat{Cpar}{\mc{C}_{\mathrm{par}}}
+
+\section{Preface:}
+Throughout this homework I use covariant composition (so \((f;g)(x) = (fg)(x) = g(f(x))\)) on morphisms. Composition (and use) of functors and natural transformations will stay as usual.
+% If desired I can change this.
+I also denote the equivalence class of a partial map representative as \(\b{m, f}\).
+
+I will also write \(ℓ : \p{m, f} ⊑ \p{m', f'}\) (and \(≡\)) when I talk about the (unique) map which makes the (in)equality hold.
+
+\begin{homeworkProblem}
+    Show that partial maps in \(\C\) form a category. That is, define a category \(\Cpar\) with \(|\Cpar| = |\C|\) and \(\Cpar{X, Y} = \) the collection of partial maps from \(X\) to \(Y\).
+
+    \solution[]
+    We define \(\Cpar\) via \(|\Cpar| ≔ |\C|\) and for \(X,Y ∈ |\Cpar|\) we define \[\Cpar{X, Y} ≔ \set{\b{f,m} ⊆ \C{X₀,Y}×\C{X₀,X}}{X₀ ∈ |\C|, m \text{ monic}}.\]
+    It remains to define the composition and identity, and show that the identity and associativity laws hold for the above.
+
+    Define \(\id_X ∈ \Cpar\) as \(\b{\id_X, \id_X}\) and the composite of partial maps \(\b{m, f}\) and \(\b{n, g}\) as follows:
+    taking the pullback of the cospan \({X₀ \overset{f}{→} Y \overset{n}{←} Y₀}\) gives us the following diagram
+    \[\begin{tikzcd}
+        {\bar{X₀}} & {Y₀} & {Z}\\
+        {X₀}       & {Y} \\
+        {X}
+        \arrow[from=1-1, to=1-2, "\bar{f}"]
+        \arrow[from=1-1, to=2-1, "\bar{n}"]
+        \arrow[from=2-1, to=2-2, "f"]
+        \arrow[from=2-1, to=3-1, "m"]
+        \arrow[from=1-2, to=1-3, "g"]
+        \arrow[from=1-2, to=2-2, "n"]
+        \arrow[from=1-1, to=2-2, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+    \end{tikzcd}\]
+    We define \(\b{m, f};\b{n, g} ≔ \b{\bar{n}m, \bar{f}g}\).
+    The map \(\bar{n}m\) is monic, as \(\bar{n}\) is monic, since it's the pullback of a monic map.
+    It remains to show that composition is well-defined according to \(≡\).
+
+    Let \(\p{m₁,f₁}\) and \(\p{m₂,f₂}\) be two partial map representatives of the same map.
+    Then the two compositions (via pullbacks) with \(\b{n,g}\) are \(\b{\bar{n}ᵢmᵢ, \bar{fᵢ}g}\).
+    Because \(φ : \p{m₁,f₁} ≡ \p{m₂,f₂}\), we can form the following diagrams:
+    \[
+    \begin{tikzcd}
+        {Pᵢ} & {Y₀} & {Z}\\
+        {Xᵢ} & {Y} \\
+        {X}
+        \arrow[from=1-1, to=1-2, "\bar{fᵢ}"]
+        \arrow[from=1-1, to=2-1, "\bar{n}ᵢ"]
+        \arrow[from=2-1, to=2-2, "fᵢ"]
+        \arrow[from=2-1, to=3-1, "mᵢ"]
+        \arrow[from=1-2, to=1-3, "g"]
+        \arrow[from=1-2, to=2-2, "m"]
+        \arrow[from=1-1, to=2-2, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+    \end{tikzcd}\qquad
+    \begin{tikzcd}
+        {P₁}\\
+        {}   & {P₂} & {Y₀}\\
+        {}   & {X₂} & {}
+        \arrow[from=1-1, to=2-2, "ψ", dashed]
+        \arrow[from=2-2, to=3-2, "\bar{n}₂"]
+        \arrow[from=2-2, to=2-3, "\bar{f₂}"]
+        \arrow[from=2-2, to=3-3, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+        \arrow[from=1-1, to=2-3, "\bar{f₁}", curve={height=-20pt}]
+        \arrow[from=1-1, to=3-2, "\bar{n}₁φ"', curve={height=14pt}]
+    \end{tikzcd}\quad
+    \begin{tikzcd}
+        {P₂}\\
+        {}   & {P₁} & {Y₀}\\
+        {}   & {X₁} & {}
+        \arrow[from=1-1, to=2-2, "ψ'", dashed]
+        \arrow[from=2-2, to=3-2, "\bar{n}₁"]
+        \arrow[from=2-2, to=2-3, "\bar{f₁}"]
+        \arrow[from=2-2, to=3-3, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+        \arrow[from=1-1, to=2-3, "\bar{f₂}", curve={height=-20pt}]
+        \arrow[from=1-1, to=3-2, "\bar{n}₂φ^{-1}"', curve={height=14pt}]
+    \end{tikzcd}
+    \]
+    The outer squares on the right two diagrams commute, thus we get the (unique) morphisms \(ψ\) and \(ψ'\) from the pullback square. This gives us the identities \(ψ\bar{n}₂ = \bar{n}₁φ\), \(ψ\bar{f₂} = \bar{f₁}\), \(ψ'\bar{n}₁ = \bar{n}₂φ^{-1}\), and \(ψ'\bar{f₁} = \bar{f₂}\), which are exactly the required identities to conclude both \(\p{\bar{n}₁m₁, \bar{f₁}g} ⊑ \p{\bar{n}₂m₂, \bar{f₂}g}\) and \(\p{\bar{n}₂m₂, \bar{f₂}g} ⊑ \p{\bar{n}₁m₁, \bar{f₁}g}\). We can similarly prove that composition is also well-defined on the other argument.
+
+    Define the identity morphism on \(X ∈ |\Cpar|\) as \(\p{\id_X, \id_X}\). Pullback along an identity give us the same morphism, so \(\b{m,f};\b{\id_X, \id_X} = \b{\id_X;m, f;\id_X} = \b{m,f}\) and \(\b{\id_X, \id_X};\b{m,f} = \b{m;\id_X, \id_X;f} = \b{m,f}\).
+
+    It remains to show associativity.
+    Consider the pullback diagrams
+    \[\begin{tikzcd}
+        {P}      & {}   & {Z₀} & {W}\\
+        {P_{XY}} & {Y₀} & {Z} \\
+        {X₀}     & {Y} \\
+        {X}
+        \arrow[from=1-1, to=1-3, "p"]
+        \arrow[from=1-1, to=2-1, "\bar{n}"]
+        \arrow[from=2-1, to=2-2, "\bar{f}"]
+        \arrow[from=2-1, to=3-1, "\bar{m}"]
+        \arrow[from=3-1, to=3-2, "f"]
+        \arrow[from=3-1, to=4-1, "i"]
+        \arrow[from=2-2, to=2-3, "g"]
+        \arrow[from=2-2, to=3-2, "m"]
+        \arrow[from=1-3, to=1-4, "h"]
+        \arrow[from=1-3, to=2-3, "n"]
+        \arrow[from=1-1, to=2-2, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+        \arrow[from=2-1, to=3-2, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+    \end{tikzcd}\text{    and    }
+    \begin{tikzcd}
+        {P'}  & {P_{YZ}'} & {Z₀} & {W}\\
+        {}   & {Y₀}     & {Z} \\
+        {X₀} & {Y}     \\
+        {X}
+        \arrow[from=1-1, to=1-2, "\bar{f}"]
+        \arrow[from=1-1, to=3-1, "q"]
+        \arrow[from=1-2, to=1-3, "\bar{g}"]
+        \arrow[from=1-2, to=2-2, "\bar{n}'"]
+        \arrow[from=3-1, to=3-2, "f"]
+        \arrow[from=3-1, to=4-1, "i"]
+        \arrow[from=2-2, to=2-3, "g"]
+        \arrow[from=2-2, to=3-2, "m"]
+        \arrow[from=1-3, to=1-4, "h"]
+        \arrow[from=1-3, to=2-3, "n"]
+        \arrow[from=1-1, to=2-2, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+        \arrow[from=1-2, to=2-3, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+    \end{tikzcd}
+    \]
+    We wish to show that \(\p{\bar{n}\bar{m}i, ph} ≡ \p{qi, \bar{f}\bar{g}h}\).
+    % Pullback laws from the following two diagrams give us one inequality, and by symmetry we can also derive the other one:
+    Consider now the following sub-diagrams of the above:
+    \[
+        \begin{tikzcd}
+            {P}\\
+            {}   & {P_{YZ}'} & {Z₀}\\
+            {}   & {Y₀}      & {Z}
+            \arrow[from=1-1, to=2-2, "φ", dashed]
+            \arrow[from=2-2, to=3-2, "\bar{n}'"]
+            \arrow[from=2-2, to=2-3, "\bar{g}"]
+            \arrow[from=2-3, to=3-3, "n"]
+            \arrow[from=3-2, to=3-3, "g"]
+            \arrow[from=2-2, to=3-3, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+            \arrow[from=1-1, to=2-3, "p", curve={height=-20pt}]
+            \arrow[from=1-1, to=3-2, "\bar{n}\bar{f}"', curve={height=14pt}]
+        \end{tikzcd}\qquad
+        \begin{tikzcd}
+            {P}\\
+            {}   & {P'} & {P_{YZ}'}\\
+            {}   & {X₀} & {Y}
+            \arrow[from=1-1, to=2-2, "ψ", dashed]
+            \arrow[from=2-2, to=3-2, "q"]
+            \arrow[from=2-2, to=2-3, "\bar{f}"]
+            \arrow[from=2-3, to=3-3, "\bar{n}'m"]
+            \arrow[from=3-2, to=3-3, "f"]
+            \arrow[from=2-2, to=3-3, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+            \arrow[from=1-1, to=2-3, "φ", curve={height=-20pt}]
+            \arrow[from=1-1, to=3-2, "\bar{n}\bar{m}"', curve={height=14pt}]
+        \end{tikzcd}
+    \]
+    The outer squares are present in the original diagrams, so they commute. Then by pullback laws the maps \(φ\) and \(ψ\) exist and \(ψ\) is a witness for \(\p{\bar{n}\bar{m}i, ph} ⊑ \p{qi, \bar{f}\bar{g}h}\) (since \(ψqi = \bar{n}\bar{m}i\) and \(ψ\bar{f}\bar{g}h = φ\bar{g}h = ph\)).
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+    Define an identity-on-objects faithful functor \(I : \C → \Cpar\).
+
+    \solution[]
+    Define the functor as follows:
+    \begin{align*}
+               I : \C &→ \Cpar\\
+                    X &↦ X\\
+        \p{f : X → Y} &↦ \b{\id_X, f} : I(X) → I(Y).
+    \end{align*}
+
+    We need to verify it respects identities and compositions. Let \(X,Y,Z ∈ |\C|\), \(f ∈ \C{X,Y}\), and \(g ∈ \C{Y,Z}\).
+    \begin{align*}
+        &I(\id_X) = \b{\id_X, \id_X} = \id_X ∈ \Cpar,\\
+        &I(f;g) = \b{\id_X, f;g} = \b{\id_X,f};\b{\id_Y,g} = I(f);I(g).
+    \end{align*}
+
+    Thus, \(I\) is indeed a functor. Let now \(f\) and \(g\) both be from \(\C{X,Y}\), such that \(I(f) = I(g)\). Then we have \(φ : \p{\id_X,f} ≡ \p{\id_X, g}\). From the equation \(φ\id_X = \id_X\) it follows that \(φ = \id_X\). Then it follows from \(φf = g\) that \(f = g\) and \(I\) is faithful.
+
+    We used the fact that a pullback along an identity is again the same morphism.
+    Consider the following diagram, with the inner and outer squares commuting.
+    \[\begin{tikzcd}
+        {P}\\
+        {}  & {X} & {X}\\
+        {}  & {Y} & {Y}
+        \arrow[from=1-1, to=2-2, "p", shift left=1]
+        \arrow[from=1-1, to=2-2, "h"',shift right=1]
+        \arrow[from=2-2, to=3-2, "f"]
+        \arrow[from=2-2, to=2-3, "\id_X"]
+        \arrow[from=2-3, to=3-3, "f"]
+        \arrow[from=3-2, to=3-3, "\id_Y"]
+        % \arrow[from=2-2, to=3-3, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+        \arrow[from=1-1, to=2-3, "p", curve={height=-20pt}]
+        \arrow[from=1-1, to=3-2, "q"', curve={height=14pt}]
+    \end{tikzcd}\]
+    Then the required map from \(P\) to \(X\) as required for a pullback exists (and is \(p\)).
+    It is also unique, since if there is another map \(h\) such that the triangles commute, then \(p = h\) follows from the upper triangle.
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+    Suppose that every object \(X\) of \(\C\) has a partial map classifier. Show that the operation \(X ↦ \tX\) extends to a faithful functor \(\tilde{(-)} : \C → \C\) with respect to which the maps \((η_X)_{X ∈ |\C|}\) form the components of a natural transformation \(η : \id_{\C} ⇒ \tilde{(-)}\).
+
+    \solution[]
+
+    \textbf{Lemma:}
+    The maps \(η_X\) are monic.
+    \begin{proof}[Proof of lemma]
+        Let \(f,g : X → Y\) be such that \(fη_Y = gη_Y\). Then consider the following diagram:
+        \[\begin{tikzcd}
+            {X}\\
+            {} & {X} & {Y}\\
+            {} & {X} & {\tY}
+            \arrow[from=1-1, to=2-2, "φ", dashed]
+            \arrow[from=2-2, to=2-3, "f"]
+            \arrow[from=2-2, to=3-2, "\id_X"]
+            \arrow[from=3-2, to=3-3, "t_{\id_X,f}"']
+            \arrow[from=2-3, to=3-3, "η_Y"]
+            \arrow[from=2-2, to=3-3, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+            \arrow[from=1-1, to=2-3, "g", curve={height=-20pt}]
+            \arrow[from=1-1, to=3-2, "\id_X"', curve={height=14pt}]
+        \end{tikzcd}\]
+        The inner square is a pullback, since it arises from the partial map classifier of \(\p{\id_X, f}\), and the outer square commutes by assumption (\(\id_X;t_{\id_X,f} = f;η_Y = g;η_Y\)).
+        Then by pullback laws there exists a unique \(φ : X → X\) such that \(φ;\id_X = \id_X\) and \(φ;f = g\). From the first equation we get \(φ = \id_X\) which means that \(f = g\) follows and thus, \(η_Y\) is a mono.
+    \end{proof}
+    \begin{proof}
+        Let \(f : X → Y\). Define then \(\tilde{f}\) to be the map \(t_{η_X, f}\) arising from the partial map classifier of the partial map representative \(\p{η_X, f}\) (as shown above, \(η_X\) is monic). This makes the diagram \(\begin{tikzcd}
+            {X}         & {Y}\\
+            {\tX} & {\tY}
+            \arrow[from=1-1, to=1-2, "f"]
+            \arrow[from=1-1, to=2-1, "η_X"]
+            \arrow[from=2-1, to=2-2, "\tilde{f}"]
+            \arrow[from=1-2, to=2-2, "η_Y"]
+        \end{tikzcd}\) commute, which will satisfy the naturality condition later.
+
+        Next we have to show \(\tilde{(-)}\) is a functor.
+        We have already defined the functions \(F₀ : |\C| → |\C|\) and \(F_{1,X,Y} : \C{X,Y} → \C{\tX, \tY}\) appropriately, so we only need to verify that \(\tilde{\id_X} = \id_{\tX}\) and \(\tilde{f;g} = \tilde{f};\tilde{g}\).
+
+        First consider the following diagrams:
+        \[
+            \begin{tikzcd}
+                {X}   & {X}\\
+                {\tX} & {\tX}
+                \arrow[from=1-1, to=1-2, "\id_X"]
+                \arrow[from=1-1, to=2-1, "η_X"]
+                \arrow[from=2-1, to=2-2, "\tilde{\id_X}"]
+                \arrow[from=1-2, to=2-2, "η_X"]
+            \end{tikzcd}\qquad
+            \begin{tikzcd}
+                {X}   & {X}\\
+                {\tX} & {\tX}
+                \arrow[from=1-1, to=1-2, "\id_X"]
+                \arrow[from=1-1, to=2-1, "η_X"]
+                \arrow[from=2-1, to=2-2, "\id_{\tX}"]
+                \arrow[from=1-2, to=2-2, "η_X"]
+            \end{tikzcd}
+        \]
+        %TODO: elaborate?
+        They are both pullbacks, so by uniqueness of \(t_{η_X, \id_X}\) they are equal, so \(\tilde{\id_X} = \id_{\tX}\).
+
+        Next consider the following diagrams:
+        \[
+            \begin{tikzcd}
+                {X}   & {Y}   & {Z}  \\
+                {\tX} & {\tY} & {\tZ}
+                \arrow[from=1-1, to=2-1, "η_X"]
+                \arrow[from=1-1, to=1-2, "f"]
+                \arrow[from=2-1, to=2-2, "\tilde{f}"]
+                \arrow[from=1-2, to=2-2, "η_Y"]
+                \arrow[from=1-2, to=1-3, "g"]
+                \arrow[from=2-2, to=2-3, "\tilde{g}"]
+                \arrow[from=1-3, to=2-3, "η_Z"]
+            \end{tikzcd}\qquad
+            \begin{tikzcd}
+                {X}   & {Z}\\
+                {\tX} & {\tZ}
+                \arrow[from=1-1, to=1-2, "f;g"]
+                \arrow[from=1-1, to=2-1, "η_X"]
+                \arrow[from=2-1, to=2-2, "\tilde{f;g}"]
+                \arrow[from=1-2, to=2-2, "η_Z"]
+            \end{tikzcd}
+        \]
+        On the left diagram the inner two squares are pullbacks, thus by the pullback lemma so is the outer square. But then, as the right square is also a pullback diagram, we get \(\tilde{f;g} = \tilde{f};\tilde{g}\) by uniqueness via the partial map classifier.
+
+        Together then \(\tilde{(-)}\) is a functor and \(η : \id_{\C} ⇒ \tilde{(-)}\) is a natural transformation.
+    \end{proof}
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+    Suppose that \(Y\) has a partial map classifier. Show that, for any two representatives \(\p{m, f}\) and \(\p{m', f'}\) of partial maps from \(X\) to \(Y\), it holds that \(\p{m, f} ≡ \p{m', f'}\) if and only if \(\tmf = t_{m',f'}\).
+    
+    \solution[]
+    \begin{proof}
+        Consider the diagram
+        \[\begin{tikzcd}
+            {X₀} & {X₀'} & {Y}\\
+            {X}  & {X}   & {\tY}
+            \arrow[from=1-1, to=1-2, "i"]
+            \arrow[from=1-1, to=2-1, "m'"]
+            \arrow[from=2-1, to=2-2, "\id_X", Rightarrow, no head]
+            \arrow[from=1-2, to=2-2, "m"]
+            \arrow[from=1-1, to=1-3, "f"', curve={height=-28pt}]
+            \arrow[from=1-2, to=1-3, "f'"]
+            \arrow[from=1-3, to=2-3, "η_Y"]
+            \arrow[from=2-2, to=2-3, "t'"]
+            \arrow[from=1-2, to=2-3, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+        \end{tikzcd}\]
+        Then if \(i : \p{m, f} ≡ \p{m', f'}\) the above diagram commutes.
+        We wish to show the left square is a pullback.
+        Take \(X \overset{p}{←} Z \overset{q}{→} X₀'\), such that \(p = qm\).
+        Then, since \(i\) is an iso \(qi^{-1}\) is a morphism from \(Z\) to \(X₀\).
+        Because \(Y\) has a partial map classifier that morphism is also unique (as it maps into a pullback), so the left square is also a pullback.
+        Then, by the pullback lemma the outer square is also a pullback.
+        From there, we conclude that \(t = t'\), since \(t\) is the unique morphism, that makes that square a pullback.
+
+        In the other direction, from the assumption that \(t = t'\) we see that the outer and right squares are pullbacks, and \(i : X₀ → X₀'\) exists because \(X₀'\) is a pullback and the diagram (without \(i\)) commutes. This \(i\) also makes the whole diagram commute.
+        Then again by the pullback lemma we conclude that the left square is a pullback.
+        Then \(i\) is an iso and \(i : \p{m, f} ≡ \p{m', f'}\).
+    \end{proof}
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}
+    Show that an object \(Y\) has a partial map classifier if and only if the functor \(F ≔ \Cpar{-, Y} ◦ I^\op : \C^\op → \cSet\) is representable.
+    (Here \(I^\op : \C^\op → \Cpar^\op\) is the opposite-category version of \(I : \C → \Cpar\)).
+
+    \solution[]
+
+    Let us first break down both definitions:
+    \begin{itemize}
+        \item \(\exist{\tY ∈ |\C|, η_Y : Y → \tY}{\for{\b{m,f} ∈ \Cpar{X, Y}}{\existi{\tmf ∈ \C{X, \tY}}{\text{the square is a pullback}}}}\).
+        \item \(\exist{Z ∈ |\C|, α : \Cpar{-, Y}∘I^\op ⇒ \C{-, Z}}{α \text{ is a natural isomorphism}}\).
+        \begin{itemize}
+            \item For all \(X ∈ |\C|\) \(α_X\) is an iso
+            \item For all \(f ∈ \C{X, X'}\) we have
+                \[\begin{tikzcd}
+                    {X}  && {\Cpar{X , Y}} & {\C{X , Z}}\\
+                    {X'} && {\Cpar{X', Y}} & {\C{X', Z}}
+                    \arrow[from=1-1, to=2-1, "f"]
+                    \arrow[from=1-3, to=1-4, "α_X"]
+                    \arrow[from=2-3, to=1-3, "Ff"]
+                    \arrow[from=2-3, to=2-4, "α_{X'}"]
+                    \arrow[from=2-4, to=1-4, "f^*"']
+                \end{tikzcd}\]
+                where \(Ff = \b{m, g} ↦ \b{\id_X, f};\b{m, g} = \b{\bar m, \bar f;g}\).
+        \end{itemize}
+    \end{itemize}
+
+    The equivalence will obviously take \(\tY = Z\).
+    \begin{proof}[\((⇒)\)]
+        Define \(α_X\b{m, f} ≔ \tmf\), the unique map arising from the partial map classifier \(\tY\). It is well-defined by problem 4 (\(\b{m,f} = \b{m',f'} ⇒ \tmf = t_{m',f'}\)).
+
+        Take \(\b{m,g} ∈ \Cpar{X',Y}\) and \(f ∈ \C{X,X'}\). Then we have \(\p{Ff;α_X}\b{m,g} = t_{\bar{m},\bar{f};g}\) and \(\p{α_{X'};f^*}\b{m,g} = f;t_{m,g}\).
+        As before by pullback lemma on the diagram
+        \[\begin{tikzcd}
+            {X₀} & {X₀'} & {Y}  \\
+            {X } & {X'}  & {\tY}
+            \arrow[from=1-1, to=2-1, "\bar{m}"]
+            \arrow[from=1-1, to=1-2, "\bar{f}"]
+            \arrow[from=2-1, to=2-2, "f"]
+            \arrow[from=1-2, to=2-2, "m"]
+            \arrow[from=1-2, to=1-3, "g"]
+            \arrow[from=2-2, to=2-3, "t_{m,g}"]
+            \arrow[from=1-3, to=2-3, "η_Y"]
+            \arrow[from=1-1, to=2-2, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+            \arrow[from=1-2, to=2-3, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+        \end{tikzcd}\]
+        and uniqueness of \(t_{\bar{m}, \bar{f};g}\) we see that \(f;t_{m,g} = t_{\bar{m}, \bar{f};g}\).
+        This makes the naturality square commute, so \(α\) is a natural transformation.
+
+        Define \(β : \C{-, \tY} ⇒ F\) by \(β_Xh ≔ \b{p, q}\) where \(X \overset{p}{←} P \overset{q}{→} Y\) is the pullback of the cospan \(X \overset{h}{→} \tY \overset{η_Y}{←} Y\).
+
+        Then \(\p{αβ}_Xh = t_{p, q} = h\) by uniqueness of \(t_{p,q}\) and \(\p{βα}_{X'}\b{m,g} = \b{m,g}\). Thus, \(α\) is a natural isomorphism.
+    \end{proof}
+    \begin{proof}[\((⇐)\)]
+        Let now \(α : \Cpar{-, Y}∘I^\op ⇒ \C{-, Z}\) be a natural isomorphism and \(X \overset{m}{←} X₀ \overset{f}{→} Y\) be a partial map representative from \(X\) to \(Y\).
+
+        Define \(η_Y ≔ α_Y\b{\id_Y,\id_Y}\) and \(\tmf ≔ α_X\b{m,f}\).
+
+        Keep the following diagram in mind (note that we do not assert the commutativity or existence of any of the maps indicated by convention):
+        \[\begin{tikzcd}
+            {P}\\
+            {} & {X₀} & {Y}\\
+            {} & {X}  & {\tY}
+            \arrow[from=1-1, to=2-2, "φ", dashed]
+            \arrow[from=2-2, to=2-3, "f"]
+            \arrow[from=2-2, to=3-2, "m"]
+            \arrow[from=3-2, to=3-3, "\tmf"']
+            \arrow[from=2-3, to=3-3, "η_Y"]
+            \arrow[from=1-1, to=2-3, "p", curve={height=-20pt}]
+            \arrow[from=1-1, to=3-2, "q"', curve={height=14pt}]
+        \end{tikzcd}\]
+
+        First we have to prove the inner square commutes. Consider the following diagrams that arise from the naturality of \(α\):
+        \[\begin{tikzcd}
+            {X₀} & {\Cpar{X₀, Y}} & {\C{X₀, Z}}\\
+            {Y}  & {\Cpar{Y , Y}} & {\C{Y , Z}}
+            \arrow[from=1-1, to=2-1, "f"]
+            \arrow[from=1-2, to=1-3, "α_{X₀}"]
+            \arrow[from=2-2, to=1-2, "Ff"]
+            \arrow[from=2-2, to=2-3, "α_{Y}"]
+            \arrow[from=2-3, to=1-3, "f^*"']
+        \end{tikzcd}\qquad\qquad
+        \begin{tikzcd}
+            {X₀} & {\Cpar{X₀, Y}} & {\C{X₀, Z}}\\
+            {X}  & {\Cpar{X , Y}} & {\C{X , Z}}
+            \arrow[from=1-1, to=2-1, "m"]
+            \arrow[from=1-2, to=1-3, "α_{X₀}"]
+            \arrow[from=2-2, to=1-2, "Fm"]
+            \arrow[from=2-2, to=2-3, "α_{X}"]
+            \arrow[from=2-3, to=1-3, "m^*"']
+        \end{tikzcd}\]
+        We use commutativity of the diagrams on \(\id_Y\) and \(\b{m,f}\) respectively to get \(f;η_Y = α_{X₀}\b{\id_{X₀}, f}\) and \(m;\tmf = α_{X₀}\b{\id_{X₀},f}\).
+        It then follows that the inner square commutes.
+
+        Next we wish to show that it is a pullback. Consider \(X \overset{p}{←} P \overset{q}{→} Y\) arbitrary, such that \(p;η_Y = q;\tmf\).
+
+        By similar two naturality diagrams for \(p\) and \(q\) as above we get \(p;η_Y = α_P\p{Fp\p{\id_Y}} = α_P\b{\id_P,p}\) and \(q;\tmf = α_P\b{\bar{m}, \bar{q}f}\), which are equal by assumption.
+
+        (Note: the maps \(\bar{m}\) and \(\bar{q}\) arise from the pullback diagram
+        \(\begin{tikzcd}
+            {\bar{P}} & {X₀}\\
+            {P}       & {X}
+            \arrow[from=1-1, to=1-2, "\bar{q}"]
+            \arrow[from=1-1, to=2-1, "\bar{m}"]
+            \arrow[from=2-1, to=2-2, "q"]
+            \arrow[from=1-2, to=2-2, "m"]
+            \arrow[from=1-1, to=2-2, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+        \end{tikzcd}\))
+
+        Since \(α_P\) is an iso it then follows that \(\b{\id_P, p} = \b{\bar{m},\bar{q}f}\).
+        Writing out the definition of equivalence we see that \(\bar{m}\) is an iso and \(\bar{m}p = \bar{q}f\). We can then define \(φ ≔ \bar{m}^{-1}\bar{q}\).
+        
+        The pullback square above gives us the equation \(\bar{q}m = \bar{m}q\).
+        Putting it all together we get \(φf = \bar{m}^{-1}\bar{q}f = p\) and \(φm = \bar{m}^{-1}\bar{q}m = \bar{m}^{-1}\bar{m}q = q\), making the square a pullback.
+
+        It remains to show uniqueness of \(\tmf\).
+        Let \(t'\) be another map for which
+        \(\begin{tikzcd}
+            {X₀} & {Y}\\
+            {X}  & {\tY}
+            \arrow[from=1-1, to=2-1, "m"]
+            \arrow[from=1-1, to=1-2, "f"]
+            \arrow[from=2-1, to=2-2, "t'"]
+            \arrow[from=1-2, to=2-2, "η_Y"]
+            \arrow[from=1-1, to=2-2, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+        \end{tikzcd}\) is a pullback.
+        Then, because \(α_X\) is iso, we have \(t' = α_X\b{n,g}\) for some \(\b{n,g} ∈ \Cpar{X,\tY}\).
+        Then by the first part of this proof we know that \(\begin{tikzcd}
+            {P} & {Y}\\
+            {X} & {\tY}
+            \arrow[from=1-1, to=2-1, "n"]
+            \arrow[from=1-1, to=1-2, "g"]
+            \arrow[from=2-1, to=2-2, "t'"]
+            \arrow[from=1-2, to=2-2, "η_Y"]
+            \arrow[from=1-1, to=2-2, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+        \end{tikzcd}\) is also a pullback. Because pullbacks are unique up to isomorphism, we have an iso \(X₀ → P\) witnessing \(\p{m,f} ≡ \p{n,g}\), so \(\tmf = α_X\b{m,f} =α_X\b{n,g} = t'\).
+    \end{proof}
+
+
+        % Consider the naturality diagram for \(t'\) applied to \(\b{η_Y,\id_Y}\).
+        % % https://q.uiver.app/?q=WzAsOSxbMSwxLCJcXENwYXIoWCxZKSJdLFsyLDIsIlxcQyhaLFopIl0sWzIsMSwiXFxDKFgsWikiXSxbMSwyLCJcXENwYXIoWixZKSJdLFswLDMsIlxcYnvOt19ZLFxcaWRfWX0iXSxbMCwwLCJcXGJ7bSxmfSJdLFsyLDAsInRfe20sZn0iXSxbMywzLCJ0X3vOt19ZLFxcaWRfWX0iXSxbMywxLCJ0Jzt0X3vOt19ZLFxcaWRfWX0iXSxbMCwyXSxbMywxXSxbMywwXSxbMSwyXSxbNCw1LCJGdCciLDIseyJzdHlsZSI6eyJ0YWlsIjp7Im5hbWUiOiJtYXBzIHRvIn19fV0sWzUsNiwizrFfWCIsMix7InN0eWxlIjp7InRhaWwiOnsibmFtZSI6Im1hcHMgdG8ifX19XSxbNyw0LCLOsV9aIiwyLHsic3R5bGUiOnsidGFpbCI6eyJuYW1lIjoibWFwcyB0byJ9fX1dLFs3LDgsInQnXioiLDAseyJzdHlsZSI6eyJ0YWlsIjp7Im5hbWUiOiJtYXBzIHRvIn19fV0sWzYsOCwiIiwyLHsibGV2ZWwiOjIsInN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XV0=
+        % \[\begin{tikzcd}
+        %     {\b{m,f}}       &                      & {\tmf} \\
+        %                     & {\Cpar{X,Y}}         & {\C{X,\tY}}        & {t';t_{η_Y,\id_Y}} \\
+        %                     & {\Cpar{\tY,Y}} & {\C{\tY,\tY}} \\
+        %     {\b{η_Y,\id_Y}} &                      &                           & {t_{η_Y,\id_Y}}
+        %     \arrow[from=3-2, to=2-2, "{Ft'}"']
+        %     \arrow[from=2-2, to=2-3, "{α_X}"']
+        %     \arrow[from=3-3, to=2-3, "{t'^*}"]
+        %     \arrow[from=3-2, to=3-3, "{α_{\tY}}"']
+        %     \arrow[from=4-1, to=1-1, maps to]
+        %     \arrow[from=1-1, to=1-3, maps to]
+        %     \arrow[from=4-1, to=4-4, maps to]
+        %     \arrow[from=4-4, to=2-4, maps to]
+        %     \arrow[from=1-3, to=2-4, Rightarrow, no head]
+        % \end{tikzcd}\]
+        % It remains to show that \(t_{η_Y,\id_Y} = \id_Z\).
+
+        % We are now considering the pullback diagram(s)
+        % \[\begin{tikzcd}
+        %     {Y}         & {Y}\\
+        %     {\tY} & {\tY}
+        %     \arrow[from=1-1, to=1-2, "\id_Y"]
+        %     \arrow[from=1-1, to=2-1, "η_Y"]
+        %     \arrow[from=2-1, to=2-2, "t"']
+        %     \arrow[from=1-2, to=2-2, "η_Y"]
+        %     \arrow[from=1-1, to=2-2, "\scalebox{2}{\(\lrcorner\)}"{anchor=center,pos=0},phantom]
+        % \end{tikzcd}\]
+        % with \(t\) standing in for both \(t_{η_Y,\id_Y}\) and \(\id_Z\).
+        % Because \(α_Z\) is an isomorphism there exists \(\b{n,g} ∈ \Cpar{\tY,Y}\) such that \(α_Z\b{n,g} = \id_Z\). But then \(X \overset{p}{←} P \overset{q}{→} Y\)
+\end{homeworkProblem}
+\end{document}
