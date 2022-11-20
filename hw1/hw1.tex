@@ -10,20 +10,20 @@
 \newcommand{\hmwkClassInstructor}{}
 \newcommand{\hmwkAuthorName}{\textbf{Luna Strah},~27222025}
 
-\def\tX{\tilde{X}}
-\def\tY{\tilde{Y\,}}
-\def\tZ{\tilde{Z}}
-\def\tmf{t_{m,f}}
+\newcommand{\tX}{\tilde{X}}
+\newcommand{\tY}{\tilde{Y\,}}
+\newcommand{\tZ}{\tilde{Z}}
+\newcommand{\tmf}{t_{m,f}}
 
 \begin{document}
 \newcat{Cpar}{\mc{C}_{\mathrm{par}}}
 
 \section{Preface:}
-Throughout this homework I use covariant composition (so \((f;g)(x) = (fg)(x) = g(f(x))\)) on morphisms. Composition (and use) of functors and natural transformations will stay as usual.
+Throughout this homework I use contravariant composition (so \((f;g)(x) = (fg)(x) = g(f(x))\)) on morphisms. Composition (and use) of functors and natural transformations will stay as usual.
 % If desired I can change this.
 I also denote the equivalence class of a partial map representative as \(\b{m, f}\).
 
-I will also write \(ℓ : \p{m, f} ⊑ \p{m', f'}\) (and \(≡\)) when I talk about the (unique) map which makes the (in)equality hold.
+I will also write \(ℓ : \p{m, f} ≡ \p{m', f'}\) (and \(⊑\)) when I talk about the (unique) map which makes the (in)equality hold.
 
 \begin{homeworkProblem}
     Show that partial maps in \(\C\) form a category. That is, define a category \(\Cpar\) with \(|\Cpar| = |\C|\) and \(\Cpar{X, Y} = \) the collection of partial maps from \(X\) to \(Y\).
@@ -133,7 +133,6 @@ I will also write \(ℓ : \p{m, f} ⊑ \p{m', f'}\) (and \(≡\)) when I talk ab
     \end{tikzcd}
     \]
     We wish to show that \(\p{\bar{n}\bar{m}i, ph} ≡ \p{qi, \bar{f}\bar{g}h}\).
-    % Pullback laws from the following two diagrams give us one inequality, and by symmetry we can also derive the other one:
     Consider now the following sub-diagrams of the above:
     \[
         \begin{tikzcd}
@@ -183,7 +182,7 @@ I will also write \(ℓ : \p{m, f} ⊑ \p{m', f'}\) (and \(≡\)) when I talk ab
         &I(f;g) = \b{\id_X, f;g} = \b{\id_X,f};\b{\id_Y,g} = I(f);I(g).
     \end{align*}
 
-    Thus, \(I\) is indeed a functor. Let now \(f\) and \(g\) both be from \(\C{X,Y}\), such that \(I(f) = I(g)\). Then we have \(φ : \p{\id_X,f} ≡ \p{\id_X, g}\). From the equation \(φ\id_X = \id_X\) it follows that \(φ = \id_X\). Then it follows from \(φf = g\) that \(f = g\) and \(I\) is faithful.
+    Thus, \(I\) is indeed a functor. Let now \(f\) and \(g\) both be from \(\C{X,Y}\), such that \(I(f) = I(g)\). Then we have \(φ : \p{\id_X,f} ≡ \p{\id_X, g}\). From the equality \(φ\id_X = \id_X\) it follows that \(φ = \id_X\). Then it follows from \(φf = g\) that \(f = g\) so \(I\) is faithful.
 
     We used the fact that a pullback along an identity is again the same morphism.
     Consider the following diagram, with the inner and outer squares commuting.
@@ -210,8 +209,8 @@ I will also write \(ℓ : \p{m, f} ⊑ \p{m', f'}\) (and \(≡\)) when I talk ab
 
     \solution[]
 
-    \textbf{Lemma:}
-    The maps \(η_X\) are monic.
+    \noindent
+    \textbf{Lemma:} The maps \(η_X\) are monic.
     \begin{proof}[Proof of lemma]
         Let \(f,g : X → Y\) be such that \(fη_Y = gη_Y\). Then consider the following diagram:
         \[\begin{tikzcd}
@@ -228,7 +227,7 @@ I will also write \(ℓ : \p{m, f} ⊑ \p{m', f'}\) (and \(≡\)) when I talk ab
             \arrow[from=1-1, to=3-2, "\id_X"', curve={height=14pt}]
         \end{tikzcd}\]
         The inner square is a pullback, since it arises from the partial map classifier of \(\p{\id_X, f}\), and the outer square commutes by assumption (\(\id_X;t_{\id_X,f} = f;η_Y = g;η_Y\)).
-        Then by pullback laws there exists a unique \(φ : X → X\) such that \(φ;\id_X = \id_X\) and \(φ;f = g\). From the first equation we get \(φ = \id_X\) which means that \(f = g\) follows and thus, \(η_Y\) is a mono.
+        Then by pullback laws there exists a unique \(φ : X → X\) such that \(φ;\id_X = \id_X\) and \(φ;f = g\). From the first equality we get \(φ = \id_X\) which means that \(f = g\) follows and thus, \(η_Y\) is a mono.
     \end{proof}
     \begin{proof}
         Let \(f : X → Y\). Define then \(\tilde{f}\) to be the map \(t_{η_X, f}\) arising from the partial map classifier of the partial map representative \(\p{η_X, f}\) (as shown above, \(η_X\) is monic). This makes the diagram \(\begin{tikzcd}
@@ -239,10 +238,8 @@ I will also write \(ℓ : \p{m, f} ⊑ \p{m', f'}\) (and \(≡\)) when I talk ab
             \arrow[from=2-1, to=2-2, "\tilde{f}"]
             \arrow[from=1-2, to=2-2, "η_Y"]
         \end{tikzcd}\) commute, which will satisfy the naturality condition later.
-
         Next we have to show \(\tilde{(-)}\) is a functor.
-        We have already defined the functions \(F₀ : |\C| → |\C|\) and \(F_{1,X,Y} : \C{X,Y} → \C{\tX, \tY}\) appropriately, so we only need to verify that \(\tilde{\id_X} = \id_{\tX}\) and \(\tilde{f;g} = \tilde{f};\tilde{g}\).
-
+        We have already defined the functions \({F₀ : |\C| → |\C|}\) and \({F_{1,X,Y} : \C{X,Y} → \C{\tX, \tY}}\) appropriately, so we only need to verify that \(\tilde{\id_X} = \id_{\tX}\) and \(\tilde{f;g} = \tilde{f};\tilde{g}\).
         First consider the following diagrams:
         \[
             \begin{tikzcd}
@@ -288,7 +285,6 @@ I will also write \(ℓ : \p{m, f} ⊑ \p{m', f'}\) (and \(≡\)) when I talk ab
             \end{tikzcd}
         \]
         On the left diagram the inner two squares are pullbacks, thus by the pullback lemma so is the outer square. But then, as the right square is also a pullback diagram, we get \(\tilde{f;g} = \tilde{f};\tilde{g}\) by uniqueness via the partial map classifier.
-
         Together then \(\tilde{(-)}\) is a functor and \(η : \id_{\C} ⇒ \tilde{(-)}\) is a natural transformation.
     \end{proof}
 \end{homeworkProblem}
@@ -315,13 +311,13 @@ I will also write \(ℓ : \p{m, f} ⊑ \p{m', f'}\) (and \(≡\)) when I talk ab
         Then if \(i : \p{m, f} ≡ \p{m', f'}\) the above diagram commutes.
         We wish to show the left square is a pullback.
         Take \(X \overset{p}{←} Z \overset{q}{→} X₀'\), such that \(p = qm\).
-        Then, since \(i\) is an iso \(qi^{-1}\) is a morphism from \(Z\) to \(X₀\).
+        Then, since \(i\) is an iso, \(qi^{-1}\) is a morphism from \(Z\) to \(X₀\).
         Because \(Y\) has a partial map classifier that morphism is also unique (as it maps into a pullback), so the left square is also a pullback.
-        Then, by the pullback lemma the outer square is also a pullback.
-        From there, we conclude that \(t = t'\), since \(t\) is the unique morphism, that makes that square a pullback.
+        Then, by the pullback lemma, the outer square is also a pullback.
+        From there, we conclude that \(t = t'\), since \(t\) is the unique morphism that makes that square a pullback.
 
         In the other direction, from the assumption that \(t = t'\) we see that the outer and right squares are pullbacks, and \(i : X₀ → X₀'\) exists because \(X₀'\) is a pullback and the diagram (without \(i\)) commutes. This \(i\) also makes the whole diagram commute.
-        Then again by the pullback lemma we conclude that the left square is a pullback.
+        By the pullback lemma we again conclude that the left square is a pullback.
         Then \(i\) is an iso and \(i : \p{m, f} ≡ \p{m', f'}\).
     \end{proof}
 \end{homeworkProblem}
@@ -356,7 +352,7 @@ I will also write \(ℓ : \p{m, f} ⊑ \p{m', f'}\) (and \(≡\)) when I talk ab
     \begin{proof}[\((⇒)\)]
         Define \(α_X\b{m, f} ≔ \tmf\), the unique map arising from the partial map classifier \(\tY\). It is well-defined by problem 4 (\(\b{m,f} = \b{m',f'} ⇒ \tmf = t_{m',f'}\)).
 
-        Take \(\b{m,g} ∈ \Cpar{X',Y}\) and \(f ∈ \C{X,X'}\). Then we have \(\p{Ff;α_X}\b{m,g} = t_{\bar{m},\bar{f};g}\) and \(\p{α_{X'};f^*}\b{m,g} = f;t_{m,g}\).
+        Take arbitrary \(\b{m,g} ∈ \Cpar{X',Y}\) and \(f ∈ \C{X,X'}\). Then we have \(\p{Ff;α_X}\b{m,g} = t_{\bar{m},\bar{f};g}\) and \(\p{α_{X'};f^*}\b{m,g} = f;t_{m,g}\).
         As before by pullback lemma on the diagram
         \[\begin{tikzcd}
             {X₀} & {X₀'} & {Y}  \\
@@ -375,15 +371,13 @@ I will also write \(ℓ : \p{m, f} ⊑ \p{m', f'}\) (and \(≡\)) when I talk ab
         This makes the naturality square commute, so \(α\) is a natural transformation.
 
         Define \(β : \C{-, \tY} ⇒ F\) by \(β_Xh ≔ \b{p, q}\) where \(X \overset{p}{←} P \overset{q}{→} Y\) is the pullback of the cospan \(X \overset{h}{→} \tY \overset{η_Y}{←} Y\).
-
         Then \(\p{αβ}_Xh = t_{p, q} = h\) by uniqueness of \(t_{p,q}\) and \(\p{βα}_{X'}\b{m,g} = \b{m,g}\). Thus, \(α\) is a natural isomorphism.
     \end{proof}
     \begin{proof}[\((⇐)\)]
         Let now \(α : \Cpar{-, Y}∘I^\op ⇒ \C{-, Z}\) be a natural isomorphism and \(X \overset{m}{←} X₀ \overset{f}{→} Y\) be a partial map representative from \(X\) to \(Y\).
-
         Define \(η_Y ≔ α_Y\b{\id_Y,\id_Y}\) and \(\tmf ≔ α_X\b{m,f}\).
 
-        Keep the following diagram in mind (note that we do not assert the commutativity or existence of any of the maps indicated by convention):
+        For the rest of the proof keep the following diagram in mind (note that we do not assert the commutativity or existence of any of the maps indicated by convention):
         \[\begin{tikzcd}
             {P}\\
             {} & {X₀} & {Y}\\
@@ -420,7 +414,6 @@ I will also write \(ℓ : \p{m, f} ⊑ \p{m', f'}\) (and \(≡\)) when I talk ab
         It then follows that the inner square commutes.
 
         Next we wish to show that it is a pullback. Consider \(X \overset{p}{←} P \overset{q}{→} Y\) arbitrary, such that \(p;η_Y = q;\tmf\).
-
         By similar two naturality diagrams for \(p\) and \(q\) as above we get \(p;η_Y = α_P\p{Fp\p{\id_Y}} = α_P\b{\id_P,p}\) and \(q;\tmf = α_P\b{\bar{m}, \bar{q}f}\), which are equal by assumption.
 
         (Note: the maps \(\bar{m}\) and \(\bar{q}\) arise from the pullback diagram
@@ -437,8 +430,8 @@ I will also write \(ℓ : \p{m, f} ⊑ \p{m', f'}\) (and \(≡\)) when I talk ab
         Since \(α_P\) is an iso it then follows that \(\b{\id_P, p} = \b{\bar{m},\bar{q}f}\).
         Writing out the definition of equivalence we see that \(\bar{m}\) is an iso and \(\bar{m}p = \bar{q}f\). We can then define \(φ ≔ \bar{m}^{-1}\bar{q}\).
         
-        The pullback square above gives us the equation \(\bar{q}m = \bar{m}q\).
-        Putting it all together we get \(φf = \bar{m}^{-1}\bar{q}f = p\) and \(φm = \bar{m}^{-1}\bar{q}m = \bar{m}^{-1}\bar{m}q = q\), making the square a pullback.
+        The pullback square above gives us the equality \(\bar{q}m = \bar{m}q\).
+        Putting it all together we get the equalities \(φf = \bar{m}^{-1}\bar{q}f = p\) and \(φm = \bar{m}^{-1}\bar{q}m = \bar{m}^{-1}\bar{m}q = q\), making the square a pullback.
 
         It remains to show uniqueness of \(\tmf\).
         Let \(t'\) be another map for which
